@@ -18,16 +18,12 @@ def insert_max_heap(heap, value):
     n = len(heap)
     heapify(heap, n, n-1)
 
-def delete_max_heap(heap, value):
+def delete_max_heap(heap):
     global n
-    if value not in heap:
-        print("value not present")
-        return
-    index = heap.index(value)
-    heap[index], heap[n-1] = heap[n-1], heap[index]
+    heap[0], heap[n-1] = heap[n-1], heap[0]
     heap.pop()
     n = len(heap)
-    heapify(heap, n, index)
+    heapify(heap, n, 0)
 
 
 while True: 
@@ -40,8 +36,7 @@ while True:
         value = int(input("Enter value to insert: "))
         insert_max_heap(max_heap, value)
     elif choice == 2:
-        value = int(input("Enter value to delete: "))
-        delete_max_heap(max_heap, value)
+        delete_max_heap(max_heap)
     elif choice == 3:
         print(max_heap)
     else:
@@ -52,7 +47,7 @@ min_heap = []
 
 def min_heapify(arr, n, i):
     if i == 0:
-        return  # Root element has no parent
+        return  
 
     parent = (i - 1) // 2
     if arr[i] < arr[parent]:
@@ -76,6 +71,15 @@ print(max_heap)
 print("min heap: ")
 print(min_heap)
 
+dif = 0
+same = 0
+
 for i in range(len(max_heap)):
     if (max_heap[i] != min_heap[i]):
         print("elem different at index {}".format(i))
+        dif += 1
+    else: 
+        same += 1
+
+print("different elements: ", dif)
+print("same elements: ", same)
