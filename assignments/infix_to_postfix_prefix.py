@@ -142,12 +142,28 @@ def prefix_to_value(prefix):
     return pop(stack)
 
 
+
 infix_expression = input("Enter the infix expression: ")
 infix_list = list(infix_expression.replace(" ", ""))
 postfix_expression = infix_to_postfix(infix_list)
 print("Postfix expression:", postfix_expression)
-print("Value:", postfix_to_value(postfix_expression))
+
+
+check = True
+for i in postfix_expression:
+    if i.isalpha():
+        check = False
+        break
+
+if check:
+    print("Value:", postfix_to_value(postfix_expression))
+else:
+    print("Value: N/A")
 
 prefix_expression = infix_to_prefix(infix_list)
 print("Prefix expression:", prefix_expression)
-print("Value:", prefix_to_value(prefix_expression))
+
+if check:
+    print("Value:", prefix_to_value(prefix_expression))
+else:
+    print("Value: N/A")
