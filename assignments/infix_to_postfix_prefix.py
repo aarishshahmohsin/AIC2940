@@ -57,6 +57,8 @@ def infix_to_postfix(infix):
         else:
             postfix += i
 
+        print("".join(stack) + " " + postfix)
+
     while not is_empty(stack):
         postfix += pop(stack)
 
@@ -83,6 +85,7 @@ def infix_to_prefix(infix):
             push(stack, i)
         else:
             prefix += i
+        print("stack" + ": " + "".join(stack) + " prefix string:  " + prefix)
 
     while not is_empty(stack):
         prefix += pop(stack)
