@@ -1,5 +1,6 @@
 from queue import PriorityQueue
 
+
 class Graph:
     def __init__(self):
         self.graph = {}
@@ -25,22 +26,27 @@ def uniform_cost_search(graph, start, goal):
             for neighbor, neighbor_cost in graph[node]:
                 new_cost = cost + neighbor_cost
                 print((new_cost, neighbor, path + [(node, new_cost)]))
-                priority_queue.put((new_cost, neighbor, path + [(node, new_cost)]))
+                priority_queue.put((
+                    new_cost, neighbor, path + [(node, new_cost)]))
+
 
 
 def best_first_search(graph, start, goal, heuristic):
     priority_queue = PriorityQueue()
-    priority_queue.put([heuristic[start], start, []])
+    priority_queue.put((heuristic[start], start, []))
 
     while not priority_queue.empty():
         _, node, path = priority_queue.get()
 
         if node == goal:
             return path + [node]
-        
+
         for neighbor, _ in graph[node]:
-            print((heuristic[neighbor], neighbor, path + [(node, heuristic[neighbor])]))
-            priority_queue.put((heuristic[neighbor], neighbor, path + [(node, heuristic[neighbor])]))
+            if neighbor not in [n for n, _ in path]:
+                new_cost = heuristic[neighbor]
+                print((new_cost, neighbor, path + [(node, new_cost)]))
+                priority_queue.put((new_cost, neighbor, path + [(node, new_cost)]))
+
 
 def a_start_search(graph, start, goal, heuristic):
     priority_queue = PriorityQueue()
@@ -51,11 +57,15 @@ def a_start_search(graph, start, goal, heuristic):
 
         if node == goal:
             return path + [node]
-        
         for neighbor, neighbor_cost in graph[node]:
             new_cost = cost + neighbor_cost
-            print((heuristic[neighbor]+new_cost, new_cost, neighbor, path + [(node, new_cost+heuristic[node])]))
-            priority_queue.put((heuristic[neighbor]+new_cost, new_cost, neighbor, path + [(node, new_cost+heuristic[node])]))
+            print((
+                heuristic[neighbor]+new_cost,
+                new_cost, neighbor, path + [(node, new_cost+heuristic[node])]))
+            priority_queue.put((
+                heuristic[neighbor]+new_cost,
+                new_cost, neighbor, path + [(node, new_cost+heuristic[node])]))
+
 
 graph = Graph()
 graph.add_edge('A', 'B', 1)
